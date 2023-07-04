@@ -1,27 +1,79 @@
-import { StyleSheet, TextInput, TouchableOpacity, Text, View } from 'react-native'
+import { StyleSheet, TextInput, TouchableOpacity, Text, View, Modal, Pressable } from 'react-native'
 import React from 'react'
+import { useState } from 'react'
+import { FlatList } from 'react-native-web'
 
-const MainScreen = ({taskList}) => {
+const renderItemTask = ({item}) => {
+    return (
+        <View style={styles.task} key={item.id}>
+            <Text style={styles.taskText}> {item.task} </Text>
+        </View>
+    )
+}
+
+const MainScreen = ({ taskList }) => {
+
+  const [list, setList] = useState(taskList)
+  const [input,setInput] = useState("")
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const onAddTask = () => {
+    console.log("se agrega una tarea");
+    setList([
+        ...list,
+        {
+            id: list.length + 1,
+            task: input,
+            completed: false
+        }
+    ])
+  }
+
   return (
     <View style={styles.container} >
       <View style={styles.view1}>
-        <TextInput style={styles.input}/> 
+        <TextInput 
+            style={styles.input} 
+            placeholder='Escribe aquí la tarea'
+            value={input}
+            onChangeText={setInput}/> 
         <TouchableOpacity 
-            style = {styles.button}
-        >
-            <Text>Agregar Tarea</Text>
+            style = {styles.buttonTouchable}
+            onPress={onAddTask}>
+            <Text> Agregar </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.view2}>
-        {taskList.map(item => 
-                <View style={styles.task} key={item.id}>
-                    <Text>
-                        {item.task}
-                    </Text>
-                </View>
-            )
-        }
+        <FlatList
+            data = {list}
+            keyExtractor = {item => item.id}
+            renderItem = {renderItemTask} 
+        />
+        <Pressable
+            style={[styles.button, styles.buttonOpen]}
+            onPress={() => setModalVisible(true)}>
+            <Text style={styles.textStyle2}>Show Modal</Text>
+        </Pressable>
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Bienvenido a la App!</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyle}>Escóndeme</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   )
 }
@@ -36,7 +88,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     view1: {
-        flex: 1,
+        height:"10%",
+        flexDirection: "row",
+        gap: 30,
         paddingVertical: 20,
         paddingHorizontal: 20,
         alignItems: 'center',
@@ -48,28 +102,78 @@ const styles = StyleSheet.create({
         width: 150,
         borderBottomColor: 'lightgreen',
         borderBottomWidth: 3,
-        marginBottom: 8
+        marginBottom: 8,
+        color: "grey"
     },
-    button: {
+    buttonTouchable: {
         paddingHorizontal: 10,
-        width: 150,
+        width: 110,
         backgroundColor: 'deepskyblue',
-        borderRadius: 5,
+        borderRadius: 3,
         alignItems: 'center',
         padding: 5
     },
     view2: {
-        flex: 4,
+        height: '90%',
         backgroundColor: "lightgreen",
         width: '100%',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingVertical: 15
+        paddingVertical: 15,
     },
     task: {
-        width: '80%',
+        width: 300,
         backgroundColor: 'white',
         padding: 10,
         margin: 5
+    },
+    taskText: {
+        textAlign: 'center'
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+    },
+    buttonOpen: {
+        backgroundColor: 'forestgreen',
+    },
+    buttonClose: {
+        backgroundColor: 'lightgreen',
+    },
+    textStyle: {
+        color: 'black',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    textStyle2: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
     }
 })
