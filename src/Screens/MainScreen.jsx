@@ -3,11 +3,14 @@ import React from 'react'
 import { useState } from 'react'
 import { FlatList } from 'react-native-web'
 
-const renderItemTask = ({item}) => {
+const renderItemTask = ({item, onPressTask}) => {
     return (
-        <View style={styles.task} key={item.id}>
-            <Text style={styles.taskText}> {item.task} </Text>
-        </View>
+        <Pressable onPress={() => onPressTask (item)}>
+            <View style={styles.task} key={item.id}>
+                <Text style={styles.taskText}> {item.task} </Text>
+            </View>
+        </Pressable>
+        
     )
 }
 
@@ -16,6 +19,7 @@ const MainScreen = ({ taskList }) => {
   const [list, setList] = useState(taskList)
   const [input,setInput] = useState("")
   const [modalVisible, setModalVisible] = useState(false);
+  const [taskActive, setTaskActive] = useState({}) 
 
   const onAddTask = () => {
     console.log("se agrega una tarea");
@@ -27,6 +31,11 @@ const MainScreen = ({ taskList }) => {
             completed: false
         }
     ])
+  }
+
+  const onPressTask = (task) => {
+        setTaskActive(task)
+        setModalVisible(!modalVisible)
   }
 
   return (
@@ -47,7 +56,7 @@ const MainScreen = ({ taskList }) => {
         <FlatList
             data = {list}
             keyExtractor = {item => item.id}
-            renderItem = {renderItemTask} 
+            renderItem = {({item}) => renderItemTask({item, onPressTask})} 
         />
         <Pressable
             style={[styles.button, styles.buttonOpen]}
@@ -65,12 +74,24 @@ const MainScreen = ({ taskList }) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Bienvenido a la App!</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Escóndeme</Text>
-            </Pressable>
+            <Text style={styles.modalText}>{taskActive.task}</Text>
+            <View style={styles.buttonContainer}>
+                <Pressable
+                style={[styles.button, styles.buttonDone]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyleButton}>Done</Text>
+                </Pressable>
+                <Pressable
+                style={[styles.button, styles.buttonNotYet]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyleButton}>Not Yet</Text>
+                </Pressable>
+                <Pressable
+                style={[styles.button, styles.buttonCancel]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyleButton}>Cancel</Text>
+                </Pressable>
+            </View>
           </View>
         </View>
       </Modal>
@@ -161,6 +182,26 @@ const styles = StyleSheet.create({
     },
     buttonClose: {
         backgroundColor: 'lightgreen',
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+    },
+    buttonDone: {
+        backgroundColor: 'green',
+        margin: 10,
+    },
+    buttonNotYet: {
+        backgroundColor: 'red',
+        margin: 10,
+    },
+    buttonCancel: {
+        backgroundColor: 'grey',
+        margin: 10,
+    },
+    textStyleButton: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
     textStyle: {
         color: 'black',
