@@ -13,20 +13,26 @@ const MainScreen = ({ taskList }) => {
   const [taskActive, setTaskActive] = useState({}) 
 
   const onAddTask = () => {
-    console.log("se agrega una tarea");
-    setList([
-        ...list,
-        {
-            id: list.length + 1,
-            task: input,
-            completed: false
-        }
-    ])
+    if (input !== "") {
+        setList([
+            ...list,
+            {
+                id: list.length + 1,
+                task: input,
+                completed: false
+            }
+        ]);
+        setInput("");
+    }
   }
 
   const onPressTask = (task) => {
         setTaskActive(task)
         setModalVisible(!modalVisible)
+  }
+
+  const onDeleteTask = (taskId) => {
+    setList(prevList => prevList.filter(task => task.id !== taskId));
   }
 
   return (
@@ -38,7 +44,8 @@ const MainScreen = ({ taskList }) => {
 
       <TaskList
         list={list}
-        onPressTask={onPressTask}/>
+        onPressTask={onPressTask}
+        onDeleteTask={onDeleteTask}/>
 
       <ModalTask
         modalVisible={modalVisible}

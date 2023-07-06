@@ -3,13 +3,16 @@ import React from 'react';
 import RenderItemTask from './renderItemTask';
 
 
-const TaskList = ({list, onPressTask}) => {
+const TaskList = ({list, onPressTask, onDeleteTask}) => {
   return (
     <View style={styles.view2}>
         <FlatList
             data = {list}
-            keyExtractor = {task => task.id}
-            renderItem = {({item}) => RenderItemTask ({item, onPressTask})} 
+            keyExtractor = {task => task.id.toString()}
+            renderItem = {({item}) => RenderItemTask ({
+                item,
+                onPressTask,
+                onDeleteTask})}
         />
     </View>
   )

@@ -1,13 +1,20 @@
-import { StyleSheet, Text, View, Pressable} from 'react-native'
+import { StyleSheet, Text, View, Pressable, TouchableOpacity} from 'react-native'
 import React from 'react'
 
-const RenderItemTask = ({item, onPressTask}) => {
+const RenderItemTask = ({item, onPressTask, onDeleteTask}) => {
   return (
-    <Pressable onPress={() => onPressTask (item)}>
-        <View style={styles.task} key={item.id}>
-            <Text style={styles.taskText}> {item.task} </Text>
-        </View>
-    </Pressable>
+    <View style={styles.task}>
+      <View key={item.id}>
+        <Pressable onPress={() => onPressTask(item)}>
+            <Text style={styles.taskText}>{item.task}</Text>
+        </Pressable>
+      </View>
+      <View style={styles.deleteButtonContainer}>
+        <TouchableOpacity style={styles.deleteButton} onPress={() => onDeleteTask(item.id)}>
+                <Text style={styles.deleteText}>Eliminar</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   )
 }
 
@@ -18,9 +25,27 @@ const styles = StyleSheet.create({
         width: 300,
         backgroundColor: 'white',
         padding: 10,
-        margin: 5
+        margin: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     taskText: {
-        textAlign: 'center'
+        textAlign: 'left'
     },
+    deleteButtonContainer: {
+        marginLeft: 10
+    },
+    deleteButton: {
+        paddingHorizontal: 10,
+        width: 60,
+        backgroundColor: 'red',
+        borderRadius: 3,
+        alignItems: 'center',
+        padding: 5
+    },
+    deleteText: {
+        color: 'white'
+    },
+    
 })
