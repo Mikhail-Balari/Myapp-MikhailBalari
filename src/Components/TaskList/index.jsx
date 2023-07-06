@@ -23,7 +23,7 @@ export default TaskList
 const styles = StyleSheet.create({
     view2: {
         height: '90%',
-        backgroundColor: "lightgreen",
+        backgroundColor: "darkorange",
         width: '100%',
         justifyContent: 'flex-start',
         alignItems: 'center',

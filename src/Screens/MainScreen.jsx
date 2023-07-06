@@ -35,6 +35,29 @@ const MainScreen = ({ taskList }) => {
     setList(prevList => prevList.filter(task => task.id !== taskId));
   }
 
+  const onPressStatus = (status) => {
+    console.log("Se presiona DONE")
+    const remainTask = list.filter(taskList => taskList.id !== taskActive.id)
+    const orderedList = [
+        ...remainTask,
+        {
+            ...taskActive,
+            completed: status
+        }
+    ].sort( function (a, b) {
+        if (a.id > b.id) {
+            return 1;
+        }
+        if (a.id < b.id) {
+            return -1;
+        }
+        return 0;
+    })
+    console.log(taskActive)
+    setList(orderedList)
+    setModalVisible(!modalVisible)
+  }
+  console.log(list)
   return (
     <View style={styles.container}>
       <TopBar
@@ -50,7 +73,8 @@ const MainScreen = ({ taskList }) => {
       <ModalTask
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        taskActive={taskActive}/>
+        taskActive={taskActive}
+        onPressStatus={onPressStatus}/>
 
     </View>
   )

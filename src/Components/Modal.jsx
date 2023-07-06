@@ -4,7 +4,8 @@ import React from 'react'
 const ModalTask = ({
     modalVisible,
     taskActive,
-    setModalVisible
+    setModalVisible,
+    onPressStatus
 }) => {
   return (
     <Modal
@@ -21,14 +22,16 @@ const ModalTask = ({
             <View style={styles.buttonContainer}>
                 <Pressable
                 style={[styles.button, styles.buttonDone]}
-                onPress={() => setModalVisible(!modalVisible)}>
+                onPress={() => onPressStatus(true)}>
                 <Text style={styles.textStyleButton}>Done</Text>
                 </Pressable>
+
                 <Pressable
                 style={[styles.button, styles.buttonNotYet]}
-                onPress={() => setModalVisible(!modalVisible)}>
+                onPress={() => onPressStatus(false)}>
                 <Text style={styles.textStyleButton}>Not Yet</Text>
                 </Pressable>
+
                 <Pressable
                 style={[styles.button, styles.buttonCancel]}
                 onPress={() => setModalVisible(!modalVisible)}>

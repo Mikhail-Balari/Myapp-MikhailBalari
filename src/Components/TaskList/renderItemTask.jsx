@@ -3,7 +3,7 @@ import React from 'react'
 
 const RenderItemTask = ({item, onPressTask, onDeleteTask}) => {
   return (
-    <View style={styles.task}>
+    <View style={item.completed ? styles.taskDone : styles.task}>
       <View key={item.id}>
         <Pressable onPress={() => onPressTask(item)}>
             <Text style={styles.taskText}>{item.task}</Text>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     deleteButton: {
         paddingHorizontal: 10,
         width: 60,
-        backgroundColor: 'red',
+        backgroundColor: 'black',
         borderRadius: 3,
         alignItems: 'center',
         padding: 5
@@ -47,5 +47,17 @@ const styles = StyleSheet.create({
     deleteText: {
         color: 'white'
     },
+    taskDone: {
+        width: 300,
+        padding: 10,
+        margin: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: 'lawngreen'
+    },
+    taskNotYet: {
+        backgroundColor: 'gold'
+    }
     
 })
