@@ -1,7 +1,8 @@
-import { StyleSheet, TextInput, TouchableOpacity, Text, View, Modal, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Modal, Pressable } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { FlatList } from 'react-native-web'
+import TopBar from '../Components/TopBar'
 
 const renderItemTask = ({item, onPressTask}) => {
     return (
@@ -39,19 +40,11 @@ const MainScreen = ({ taskList }) => {
   }
 
   return (
-    <View style={styles.container} >
-      <View style={styles.view1}>
-        <TextInput 
-            style={styles.input} 
-            placeholder='Escribe aquí la tarea'
-            value={input}
-            onChangeText={setInput}/> 
-        <TouchableOpacity 
-            style = {styles.buttonTouchable}
-            onPress={onAddTask}>
-            <Text> Agregar </Text>
-        </TouchableOpacity>
-      </View>
+    <View style={styles.container}>
+      <TopBar
+      input={input}
+      onAddTask={onAddTask}
+      setInput={setInput}/>
       <View style={styles.view2}>
         <FlatList
             data = {list}
@@ -102,32 +95,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    view1: {
-        height:"10%",
-        flexDirection: "row",
-        gap: 30,
-        paddingVertical: 20,
-        paddingHorizontal: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: "white",
-        width: '100%'
-    },
-    input: {
-        width: 150,
-        borderBottomColor: 'lightgreen',
-        borderBottomWidth: 3,
-        marginBottom: 8,
-        color: "grey"
-    },
-    buttonTouchable: {
-        paddingHorizontal: 10,
-        width: 110,
-        backgroundColor: 'deepskyblue',
-        borderRadius: 3,
-        alignItems: 'center',
-        padding: 5
     },
     view2: {
         height: '90%',
