@@ -58,11 +58,6 @@ const MainScreen = ({ taskList }) => {
             keyExtractor = {item => item.id}
             renderItem = {({item}) => renderItemTask({item, onPressTask})} 
         />
-        <Pressable
-            style={[styles.button, styles.buttonOpen]}
-            onPress={() => setModalVisible(true)}>
-            <Text style={styles.textStyle2}>Show Modal</Text>
-        </Pressable>
       </View>
       <Modal
         animationType="slide"
@@ -177,12 +172,6 @@ const styles = StyleSheet.create({
         padding: 10,
         elevation: 2,
     },
-    buttonOpen: {
-        backgroundColor: 'forestgreen',
-    },
-    buttonClose: {
-        backgroundColor: 'lightgreen',
-    },
     buttonContainer: {
         flexDirection: 'row',
     },
@@ -199,16 +188,6 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     textStyleButton: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    textStyle: {
-        color: 'black',
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    textStyle2: {
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center',
