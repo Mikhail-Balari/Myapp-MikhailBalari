@@ -3,10 +3,7 @@ import React from 'react';
 import RenderItemTask from './renderItemTask';
 
 
-const TaskList = ({
-    list,
-    onPressTask
-}) => {
+const TaskList = ({list, onPressTask}) => {
   return (
     <View style={styles.view2}>
         <FlatList
