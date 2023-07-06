@@ -1,20 +1,12 @@
-import { StyleSheet, Text, View, Modal, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Modal, Pressable} from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import TopBar from '../Components/TopBar'
 import TaskList from '../Components/TaskList'
 
 
-const renderItemTask = ({item, onPressTask}) => {
-    return (
-        <Pressable onPress={() => onPressTask (item)}>
-            <View style={styles.task} key={item.id}>
-                <Text style={styles.taskText}> {item.task} </Text>
-            </View>
-        </Pressable>
-        
-    )
-}
+
+
 
 const MainScreen = ({ taskList }) => {
 
@@ -93,15 +85,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    task: {
-        width: 300,
-        backgroundColor: 'white',
-        padding: 10,
-        margin: 5
-    },
-    taskText: {
-        textAlign: 'center'
     },
     centeredView: {
         flex: 1,

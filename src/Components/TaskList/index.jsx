@@ -1,16 +1,18 @@
-import { StyleSheet, View, FlatList} from 'react-native'
-import React from 'react'
+import { StyleSheet, View, FlatList} from 'react-native';
+import React from 'react';
+import RenderItemTask from './renderItemTask';
 
-const TaskList = (
+
+const TaskList = ({
     list,
     onPressTask
-) => {
+}) => {
   return (
     <View style={styles.view2}>
         <FlatList
             data = {list}
             keyExtractor = {task => task.id}
-            renderItem = {({item}) => renderItemTask({item, onPressTask})} 
+            renderItem = {({item}) => RenderItemTask ({item, onPressTask})} 
         />
     </View>
   )
