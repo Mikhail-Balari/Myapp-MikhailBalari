@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View, Modal, Pressable } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
-import { FlatList } from 'react-native-web'
 import TopBar from '../Components/TopBar'
+import TaskList from '../Components/TaskList'
+
 
 const renderItemTask = ({item, onPressTask}) => {
     return (
@@ -42,16 +43,13 @@ const MainScreen = ({ taskList }) => {
   return (
     <View style={styles.container}>
       <TopBar
-      input={input}
-      onAddTask={onAddTask}
-      setInput={setInput}/>
-      <View style={styles.view2}>
-        <FlatList
-            data = {list}
-            keyExtractor = {item => item.id}
-            renderItem = {({item}) => renderItemTask({item, onPressTask})} 
-        />
-      </View>
+        input={input}
+        onAddTask={onAddTask}
+        setInput={setInput}/>
+      <TaskList
+        list={list}
+        onPressTask={onPressTask}/>
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -95,14 +93,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    view2: {
-        height: '90%',
-        backgroundColor: "lightgreen",
-        width: '100%',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        paddingVertical: 15,
     },
     task: {
         width: 300,
